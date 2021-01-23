@@ -53,8 +53,9 @@ namespace Part1.Controllers
                         new HashEntry(nameof(article.Votes),article.Votes),
                         new HashEntry(nameof(article.UnixTime),article.UnixTime),
                     };
+                    //存储文章信息
                     db.HashSetAsync(articleId, hashEntiies);
-
+                    //将文章信息添加到评分和时间排序的有序集合
                     db.SortedSetAddAsync("score:",articleId, 0);
                     db.SortedSetAddAsync("time:",articleId, DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
                     Thread.Sleep(1000);
